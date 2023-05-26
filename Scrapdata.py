@@ -61,8 +61,13 @@ with open('product_details.csv', 'w', newline='', encoding='utf-8') as csvfile:
             product_description = product_description_element.get_text(separator=' ').strip() if product_description_element else 'No product description available'
 
             # Extract manufacturer
-            manufacturer_element = product_soup.find('div', {'id': 'detailBullets_feature_div'})
-            manufacturer = manufacturer_element.get_text(separator=' ').strip() if manufacturer_element else 'No manufacturer available'
+            words = product_name.split()
+
+            if len(words) >= 2 and words[1][0].isdigit():
+                manufacturer= words[0]
+            else:
+                manufacturer= " ".join(words[:2])
+
 
             # Print or further process the scraped information
             print("Product URL:", product_url)
